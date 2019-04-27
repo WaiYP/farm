@@ -1,3 +1,4 @@
+{% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,6 +15,7 @@
   <!-- Core Stylesheet -->
   <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
 </head>
+
 <body>
   <!-- Preloader -->
   <div class="preloader d-flex align-items-center justify-content-center">
@@ -23,26 +25,6 @@
   <!-- ##### Header Area Start ##### -->
   <header class="header-area">
     <!-- Top Header Area -->
-    <div class="top-header-area">
-      <div class="container">
-        <div class="row">
-          <div class="col-12">
-            <div class="top-header-content d-flex align-items-center justify-content-between">
-              <!-- Top Header Content -->
-              <div class="top-header-meta">
-                <p>Welcome to <span>Farmie</span>, we hope you will enjoy our products and have good experience</p>
-              </div>
-              <!-- Top Header Content -->
-              <div class="top-header-meta text-right">
-                <a href="#" data-toggle="tooltip" data-placement="bottom" title="infodeercreative@gmail.com"><i class="fa fa-envelope-o" aria-hidden="true"></i> <span>Email: infodeercreative@gmail.com</span></a>
-                <a href="#" data-toggle="tooltip" data-placement="bottom" title="+1 234 122 122"><i class="fa fa-phone" aria-hidden="true"></i> <span>Call Us: +84 223 9000</span></a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <!-- Navbar Area -->
     <div class="famie-main-menu">
       <div class="classy-nav-container breakpoint-off">
@@ -50,7 +32,7 @@
           <!-- Menu -->
           <nav class="classy-navbar justify-content-between" id="famieNav">
             <!-- Nav Brand -->
-            <a href="index.html" class="nav-brand"><img src="{% static 'img/core-img/logo.png' %}" alt=""></a>
+            <a href="{% url 'dashboard:index' %}" class="nav-brand"><img src="{% static 'img/core-img/logo.png' %}" alt=""></a>
             <!-- Navbar Toggler -->
             <div class="classy-navbar-toggler">
               <span class="navbarToggler"><span></span><span></span><span></span></span>
@@ -64,7 +46,7 @@
               <!-- Navbar Start -->
               <div class="classynav">
                 <ul>
-                  <li class="active"><a href="index.html">Home</a></li>
+                  <li class="active"><a href="#">Home</a></li>
                   <li><a href="{% url 'dashboard:about' %}">About</a></li>
                   <li><a href="#">Pages</a>
                     <ul class="dropdown">
@@ -73,11 +55,11 @@
                       <li><a href="farming-practice.html">Farming Practice</a></li>
                       <li><a href="shop.html">Shop</a>
                         <ul class="dropdown">
-                          <li><a href="{% url 'dashboard:product' %}">Our Products</a></li>
+                          <li><a href="{% url 'dashboard:about' %}">Our Products</a></li>
                           <li><a href="shop.html">Shop</a></li>
                         </ul>
                       </li>
-                      <li><a href="{% url 'dashboard:news' %}">News</a>
+                      <li><a href="#">News</a>
                         <ul class="dropdown">
                           <li><a href="news.html">News</a></li>
                           <li><a href="news-details.html">News Details</a></li>
@@ -86,9 +68,9 @@
                       <li><a href="contact.html">Contact</a></li>
                     </ul>
                   </li>
-                  <li><a href="our-product.html">Our Product</a></li>
+                  <li><a href="{% url 'dashboard:product' %}">Our Product</a></li>
                   <li><a href="farming-practice.html">Farming Practice</a></li>
-                  <li><a href="news.html">News</a></li>
+                  <li><a href="{% url 'dashboard:news' %}">News</a></li>
                   <li><a href="contact.html">Contact</a></li>
                 </ul>
                 <!-- Search Icon -->
@@ -96,12 +78,7 @@
                   <i class="icon_search" aria-hidden="true"></i>
                 </div>
                 <!-- Cart Icon -->
-                <div id="cartIcon">
-                  <a href="#">
-                    <i class="icon_cart_alt" aria-hidden="true"></i>
-                    <span class="cart-quantity">2</span>
-                  </a>
-                </div>
+
               </div>
               <!-- Navbar End -->
             </div>
@@ -120,5 +97,167 @@
       </div>
     </div>
   </header>
+  <!-- ##### Header Area End ##### -->
+
+<div id="content">
+    {% block content %}
+    {% endblock content %}
+</div>
+
+  <!-- ##### Footer Area Start ##### -->
+  <footer class="footer-area">
+    <!-- Main Footer Area -->
+    <div class="main-footer bg-img bg-overlay section-padding-80-0" style="background-image: {% static 'img/bg-img/3.jpg' %}">
+      <div class="container">
+        <div class="row">
+
+          <!-- Single Footer Widget Area -->
+          <div class="col-12 col-sm-6 col-lg-3">
+            <div class="footer-widget mb-80">
+              <a href="#" class="foo-logo d-block mb-30"><img src="{% static 'img/core-img/logo2.png' %}" alt=""></a>
+              <p>Lorem ipsum dolor sit amet, consecte stare adipiscing elit. In act honcus risus atiner Pellentesque risus.</p>
+              <div class="contact-info">
+                <p><i class="fa fa-map-pin" aria-hidden="true"></i><span>120 Raymond Rd, New York</span></p>
+                <p><i class="fa fa-envelope" aria-hidden="true"></i><span>info.deercreative@gmail.com</span></p>
+                <p><i class="fa fa-phone" aria-hidden="true"></i><span>+84 223 9000</span></p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Single Footer Widget Area -->
+          <div class="col-12 col-sm-6 col-lg-3">
+            <div class="footer-widget mb-80">
+              <h5 class="widget-title">QUICK LINK</h5>
+              <!-- Footer Widget Nav -->
+              <nav class="footer-widget-nav">
+                <ul>
+                  <li><a href="#">Purchase</a></li>
+                  <li><a href="#">Policities</a></li>
+                  <li><a href="#">Shipping</a></li>
+                  <li><a href="#">FAQs</a></li>
+                  <li><a href="#">Return</a></li>
+                  <li><a href="#">Careers</a></li>
+                  <li><a href="#">Payments</a></li>
+                  <li><a href="#">Partners</a></li>
+                  <li><a href="#">Guide</a></li>
+                  <li><a href="#">Standard</a></li>
+                  <li><a href="#">News</a></li>
+                  <li><a href="#">Brands</a></li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+
+          <!-- Single Footer Widget Area -->
+          <div class="col-12 col-sm-6 col-lg-3">
+            <div class="footer-widget mb-80">
+              <h5 class="widget-title">RECENT NEWS</h5>
+
+              <!-- Single Recent News Start -->
+              <div class="single-recent-blog d-flex align-items-center">
+                <div class="post-thumbnail">
+                  <img src="{% static 'img/bg-img/4.jpg' %}" alt="">
+                </div>
+                <div class="post-content">
+                  <a href="#" class="post-title">WA’s largest farming business on the market</a>
+                  <div class="post-date">18 Aug 2018</div>
+                </div>
+              </div>
+
+              <!-- Single Recent News Start -->
+              <div class="single-recent-blog d-flex align-items-center">
+                <div class="post-thumbnail">
+                  <img src="{% static 'img/bg-img/5.jpg' %}" alt="">
+                </div>
+                <div class="post-content">
+                  <a href="#" class="post-title">Beef retail prices hit a record</a>
+                  <div class="post-date">18 Aug 2018</div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Single Footer Widget Area -->
+          <div class="col-12 col-sm-6 col-lg-3">
+            <div class="footer-widget mb-80">
+              <h5 class="widget-title">STAY CONNECTED</h5>
+              <!-- Footer Social Info -->
+              <div class="footer-social-info">
+                <a href="#">
+                  <i class="fa fa-facebook" aria-hidden="true"></i>
+                  <span>Facebook</span>
+                </a>
+                <a href="#">
+                  <i class="fa fa-twitter" aria-hidden="true"></i>
+                  <span>Twitter</span>
+                </a>
+                <a href="#">
+                  <i class="fa fa-pinterest" aria-hidden="true"></i>
+                  <span>Pinterest</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Copywrite Area  -->
+    <div class="copywrite-area">
+      <div class="container">
+        <div class="copywrite-text">
+          <div class="row align-items-center">
+            <div class="col-md-6">
+
+            </div>
+            <div class="col-md-6">
+              <div class="footer-nav">
+                <nav>
+                  <ul>
+                    <li><a href="{% url 'dashboard:about' %}">About</a></li>
+                    <li><a href="#">Produce</a></li>
+                    <li><a href="farming-practice.html">Practice</a></li>
+                    <li><a href="#">Products</a></li>
+                    <li><a href="news.html">News</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                  </ul>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!-- ##### Footer Area End ##### -->
+
+  <!-- ##### All Javascript Files ##### -->
+  <!-- jquery 2.2.4  -->
+  <script src="{% static 'js/jquery.min.js' %}"></script>
+  <!-- Popper js -->
+  <script src="{% static 'js/popper.min.js' %}"></script>
+  <!-- Bootstrap js -->
+  <script src="{% static 'js/bootstrap.min.js' %}"></script>
+  <!-- Owl Carousel js -->
+  <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+  <!-- Classynav -->
+  <script src="{% static 'js/classynav.js' %}"></script>
+  <!-- Wow js -->
+  <script src="{% static 'js/wow.min.js' %}"></script>
+  <!-- Sticky js -->
+  <script src="{% static 'js/jquery.sticky.js' %}"></script>
+  <!-- Magnific Popup js -->
+  <script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+  <!-- Scrollup js -->
+  <script src="{% static 'js/jquery.scrollup.min.js' %}"></script>
+  <!-- Jarallax js -->
+  <script src="{% static 'js/jarallax.min.js' %}"></script>
+  <!-- Jarallax Video js -->
+  <script src="{% static 'js/jarallax-video.min.js' %}"></script>
+  <!-- Active js -->
+  <script src="{% static 'js/active.js' %}"></script>
 </body>
+
 </html>
