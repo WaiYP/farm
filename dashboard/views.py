@@ -11,3 +11,15 @@ def product(request):
 
 def news(request):
     return render(request,'news.html')
+
+def shop(request):
+    return render(request,'shop.html')
+
+def farmingpractice(request):
+    return render(request,'farming-practice.html')
+
+def newdetail(request):
+    return render(request,'news-details.html')
+
+def contact(request):
+    return render(request,'contact.html')
