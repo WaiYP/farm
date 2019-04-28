@@ -13,7 +13,11 @@ def news(request):
     return render(request,'news.html')
 
 def shop(request):
-    return render(request,'shop.html')
+    datalist=[1,2,3,4,5,6,7,8,9,10,11]
+    context = {
+        'datalist':datalist
+    }
+    return render(request,'shop.html',context)
 
 def farmingpractice(request):
     return render(request,'farming-practice.html')
