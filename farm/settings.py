@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'dashboard',
 ]
 
 MIDDLEWARE = [
@@ -74,24 +75,24 @@ WSGI_APPLICATION = 'farm.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
-
 DATABASES = {
-'default': {
-    'ENGINE': 'django.db.backends.mysql',
-    'NAME': 'moretkt_db',
-    'USER': 'sa',
-    'PASSWORD': 'P@$$w0rd.',
-    'HOST': '52.163.244.134',
-    'PORT': '3306',
-    'AUTOCOMMIT': True,
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
 }
-}
+
+# DATABASES = {
+# 'default': {
+#     'ENGINE': 'django.db.backends.mysql',
+#     'NAME': 'moretkt_db',
+#     'USER': 'sa',
+#     'PASSWORD': 'P@$$w0rd.',
+#     'HOST': '52.163.244.134',
+#     'PORT': '3306',
+#     'AUTOCOMMIT': True,
+# }
+# }
 
 
 
