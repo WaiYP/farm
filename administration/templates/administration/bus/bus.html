@@ -1,0 +1,64 @@
+{% extends "admin_base.html" %}
+{% block title %}Buses{% endblock %}
+{% block content %}
+    <div class="content-wrapper">
+  <section class="content">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="box box-primary">
+            <div class="box-body box-profile">
+            <h3 class="pull-left">
+                Bus List
+            </h3>
+            <h3 class="pull-right">
+                <a href="{% url 'add_bus' %}" class="btn btn-success">Add new bus</a>
+            </h3>
+            <div class="row">
+
+              <div class="col-md-12">
+                <table class="table table-bordered text-center table-hover table-responsive" id="bustable">
+                <thead>
+                <tr>
+            <td>Number</td>
+            <td>Plate number</td>
+            <td>Type</td>
+            <td>Display image</td>
+            <td>In operation</td>
+            <td colspan="2">Action</td>
+        </tr>
+                </thead>
+        <tbody>
+         {% for bus in bus_list %}
+            <tr>
+                <td class="align-middle">{{ forloop.counter }}</td>
+                <td class="align-middle">{{ bus.plate_num }}</td>
+                <td class="align-middle">{{ bus.type }}</td>
+                <td> <img src="{{ bus.image.url }}" style="max-width: 150px; max-height: 20%;" alt="Bus image" ></td>
+                <td class="align-middle">
+                    {% if bus.is_active == True %}
+                        <i class="fa fa-check fa-2x" style="color: green;"></i>
+                        {% else %}
+                        <i class="fa fa-times fa-2x" style="color: red;"></i>
+                    {% endif %}
+                </td>
+                <td class="align-middle"><a href="{% url 'bus_edit' bus.pk %}" class="btn btn-primary"><i class="fa fa-pencil"></i> Edit</a></td>
+                <td class="align-middle"><a href="{% url 'add_seats' bus.id %}" class="btn btn-success"><i class="fa fa-pencil"></i> Add Seat</a></td>
+
+            </tr>
+        {% endfor %}
+        </tbody>
+
+    </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+     <script>
+        $('#bustable').dataTable(
+        );
+    </script>
+{% endblock %}

@@ -1,0 +1,79 @@
+{% extends "admin_base.html" %}
+{% block title %}Schedule List{% endblock %}
+{% block content %}
+    <div class="content-wrapper">
+  <section class="content">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="box box-primary">
+            <div class="box-body box-profile">
+            <h3 class="pull-left">
+                Schedule List
+            </h3>
+            <h3 class="pull-right">
+                <a href="{% url 'add_schedule' %}" class="btn btn-success">New schedule</a>
+            </h3>
+
+            <div style="clear: both;">&nbsp;</div>
+
+                        {% if messages %}
+                    {% for message in messages %}
+                    <div class="alert alert-success alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                {% endif %}
+            <div class="row">
+
+
+              <div class="col-md-12">
+              <table class="table table-bordered table-responsive table-hover table-striped" id="scheduletable">
+              <thead>
+              <tr>
+                      <td>No</td>
+                      <td>Bus</td>
+                      <td>Route</td>
+                      <td>Depart</td>
+                      <td>Arrive</td>
+                      <td>Action</td>
+                  </tr>
+              </thead>
+              <tbody>
+              {% for schedule in schedules %}
+                      <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ schedule.bus }}</td>
+                        <td>
+                            {{ schedule.route }}<br>
+                            <button onclick="ShowScheduleDetail('{% url 'schedule_detail' sid=schedule.pk rid=schedule.route_id %}', 'Detail', 400, 500);" class="btn btn-info btn-xs">Detail</button>
+                        </td>
+                        <td>{{ schedule.depart_time|date:"Y-m-d H:i:s" }}</td>
+                        <td>{{schedule.arrive_time|date:"Y-m-d H:i:s"}}</td>
+                        <td>
+                            <a href="{% url 'schedule_edit' schedule.id %}" class="btn btn-success">Edit</a>
+                        </td>
+                      </tr>
+                  {% endfor %}
+              </tbody>
+              </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+     <script>
+        $('#scheduletable').dataTable(
+        );
+    </script>
+       <script language="javascript" type="text/javascript">
+        function ShowScheduleDetail(pageURL, title, w, h) {
+            var left = (screen.width - w) / 2;
+            var top = (screen.height - h) / 4;  // for 25% - devide by 4  |  for 33% - devide by 3
+            var targetWin = window.open(pageURL, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
+        }
+    </script>
+{% endblock %}

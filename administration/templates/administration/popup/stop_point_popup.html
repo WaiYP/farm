@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Detail View</title>
+    <link rel="stylesheet" href="{% static 'admin-assets/bower_components/bootstrap/dist/css/bootstrap.min.css' %}">
+</head>
+<body>
+    <div class="container">
+        <br>
+
+        <strong>{{ schedule.route }}</strong><br><br>
+        <table class="table table-bordered">
+            <tr>
+                <td>
+                    <p>Vehicle: {{ schedule.bus }}</p>
+                    <p>Depart date: {{ schedule.depart_date }}</p>
+                    <p>Depart Time: {{ schedule.depart_time|date:"H:i:s" }}</p>
+                </td>
+            </tr>
+        </table>
+
+
+        <table class="table table-bordered">
+            {% for point in stop_point %}
+                <tr>
+                    <td>{{ point.city }}</td><td>ETA Hr: {{ point.eta }}</td>
+                </tr>
+            {%  endfor %}
+        </table>
+
+
+    <button onclick="closeWin()" class="btn btn-warning">Close</button>
+    </div>
+
+
+
+<script>
+function closeWin() {
+    self.close();
+}
+</script>
+</body>
+</html>

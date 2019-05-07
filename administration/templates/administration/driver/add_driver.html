@@ -1,0 +1,98 @@
+{% extends "admin_base.html" %}
+{% block title %}Drivers{% endblock %}
+{% block content %}
+    <div class="content-wrapper">
+  <section class="content-header">
+    <h1>
+        Drivers
+    </h1>
+  </section>
+
+  <section class="content">
+    <div class="row">
+                        <div class="col-md-1"></div>
+
+      <div class="col-md-10">
+        <div class="box box-primary">
+            <div class="box-body box-profile">
+            <h3 class="pull-left">
+                New Driver Information
+            </h3>
+            <div class="row">
+              <div class="col-md-12">
+                 <form name="newdriverform" method="post" enctype="multipart/form-data" onsubmit="return validateForm()" class="form">
+                    {% csrf_token %}
+                     <div class="form-group col-md-12">
+                         <label for="name">English Name<span id="name_error" style="color: red;"></span> </label>
+                         <input type="text" name="name" class="form-control" placeholder="Enter driver name in English" required/>
+                     </div>
+                     <div class="form-group col-md-12">
+                         <label for="zawgyi_name">Myanmar-Zawgyi Name<span id="name_error" style="color: red;"></span> </label>
+                         <input type="text" name="zawgyi_name" class="form-control" placeholder="Enter driver name in Myanmar-Zawgyi" required/>
+                     </div>
+                     <div class="form-group col-md-12">
+                         <label for="unicode_name">Myanmar-Unicode Name<span id="name_error" style="color: red;"></span> </label>
+                         <input type="text" name="unicode_name" class="form-control" placeholder="Enter driver name in Myanmar-Unicode" required/>
+                     </div>
+                     <div class="form-group col-md-12">
+                         <label for="chinese_name">Chinese Name<span id="name_error" style="color: red;"></span> </label>
+                         <input type="text" name="chinese_name" class="form-control" placeholder="Enter driver name in Chinese" required/>
+                     </div>
+                     <div class="form-group col-md-12">
+                          <label for="active" class="col-md-2">Active :<span id="name_error" style="color: red;"></span> </label>
+
+                        <div class="col-md-1">
+                                <input type="radio" name="active" value="True" checked />
+                                <label for="yes">Yes</label>
+                            </div>
+                            <div class="col-md-1">
+                                <input type="radio"  name="active" value="False" />
+                                <label for="no">No</label>
+                            </div>
+                     </div>
+                     <div class="form-group col-md-12">
+                         <a href="{% url 'driver' %}"class="btn btn-default pull-left">Back</a>
+                <input type="submit" class="btn btn-success pull-right" value="Add Driver"/>
+                     </div>
+            </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+</div>
+    <script>
+        $('#citytable').dataTable(
+        );
+    </script>
+     <script>
+    function validateForm() {
+    var check=true;
+    var c_name = document.forms["newdriverfrom"]["chinese_name"].value;
+    var e_name = document.forms["newdriverfrom"]["name"].value;
+    var z_name = document.forms["newdriverfrom"]["zawgyi_name"].value;
+    var u_name = document.forms["newdriverfrom"]["unicode_name"].value;
+
+   if (e_name == "") {
+        alert("English name is required");
+        check=false;
+    }
+    if (u_name == "") {
+        alert("Myanmar-Unicode name is required");
+        check=false;
+    }
+    if (z_name == "") {
+        alert("Myanmar-Zawgyi name is required");
+        check=false;
+    }
+    if (c_name == "") {
+        alert("Chinese name is required");
+        check=false;
+    }
+    return check;
+}
+    </script>
+{% endblock %}

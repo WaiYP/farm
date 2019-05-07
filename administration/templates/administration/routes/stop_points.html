@@ -1,0 +1,98 @@
+{% extends "admin_base.html" %}
+{% block title %}Add Stop Point{% endblock %}
+{% block content %}
+    <div class="content-wrapper">
+  <section class="content">
+    <div class="row">
+      <div class="col-md-1"></div>
+      <div class="col-md-10">
+        <div class="box box-primary">
+          <div class="box-body box-profile">
+            <h3>Stop Point(s): {{ route.depart }} - {{ route.arrive }} (Approx Hr: {{ route.approx_hr }})</h3>
+
+              <form name="RouteForm" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+                {% csrf_token %}
+                    <p>Place of stop point <span id="city_error" style="color: red;"></span></p>
+                    <select name="city" class="form-control">
+                      <option value="">- Select city -</option>
+                      {% for city in cities %}
+                          <option value="{{ city.pk }}">{{ city.city_name }}</option>
+                      {% endfor %}
+                    </select>
+                    <br>
+                    <p>Estimated time of arrival <span id="hr_error" style="color: red;"></span></p>
+                                                <div class="bootstrap-timepicker">
+                    <input type="text" class="form-control timepicker" name="approx_hr" value="" placeholder="Enter approx driving hour">
+                    <br>
+                                                </div>
+                    <input type="submit" class="btn btn-primary" value="Save"/>
+                    <a href="{% url 'routes' %}" class="pull-right">Back to route list</a>
+              </form>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+    <section class="content">
+    <div class="row">
+      <div class="col-md-1"></div>
+      <div class="col-md-10">
+        <div class="box box-primary">
+          <div class="box-body box-profile">
+            <h3 class="pull-left">Stop Points on This Route</h3>
+            <div class="row">
+              <div class="col-md-12">
+                <table class="table table-bordered table-striped">
+                    <tr>
+                        <td></td>
+                        <td><strong>City</strong></td>
+                        <td><strong>ETA (Hr)</strong></td>
+                    </tr>
+                    {% for point in stop_points %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ point.city }}</td>
+                            <td>{{ point.eta }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+    <script>
+        function validateForm() {
+    var check=true;
+    var city = document.forms["RouteForm"]["city"].value;
+    var approx_hr = document.forms["RouteForm"]["approx_hr"].value;
+
+    if (city == "") {
+        document.getElementById("city_error").innerHTML = "* Select a city to drop point";
+        check=false;
+    }
+    else {
+        document.getElementById("city_error").innerHTML = "";
+    }
+
+    if (approx_hr == "") {
+        document.getElementById("hr_error").innerHTML = "* Enter approx driving hour to stop point";
+        check=false;
+    }
+    else {
+        document.getElementById("hr_error").innerHTML = "";
+    }
+
+    return check;
+}
+ $('.timepicker').timepicker({
+      showInputs: false,
+     showMeridian: false
+    })
+    </script>
+{% endblock %}

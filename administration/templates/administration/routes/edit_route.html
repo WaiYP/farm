@@ -1,0 +1,81 @@
+{% extends "admin_base.html" %}
+{% block title %}Edit Route: {{ route.depart }} - {{ route.arrive }} (Approx Hr: {{ route.approx_hr }}){% endblock %}
+{% block content %}
+    <div class="content-wrapper">
+
+  <section class="content">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="box box-primary">
+            <div class="box-body box-profile">
+            <h3 class="pull-left">
+                Edit Route: {{ route.depart }} - {{ route.arrive }} (Approx Hr: {{ route.approx_hr }})
+            </h3>
+            <div class="row">
+
+              <div class="col-md-12">
+
+              <form name="RouteForm" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+                {% csrf_token %}
+                    <p>Place of Depart <span id="depart_error" style="color: red;"></span></p>
+                    <select name="depart" class="form-control">
+                      <option value="{{ route.depart_id }}">{{ route.depart }}</option>
+                      {% for city in cities %}
+                          <option value="{{ city.pk }}">{{ city.city_name }}</option>
+                      {% endfor %}
+                    </select>
+                    <br>
+                    <p>Place of Arrive <span id="arrive_error" style="color: red;"></span></p>
+                    <select name="arrive" class="form-control">
+                      <option value="{{ route.arrive_id }}">{{ route.arrive }}</option>
+                      {% for city in cities %}
+                          <option value="{{ city.pk }}">{{ city.city_name }}</option>
+                      {% endfor %}
+                    </select>
+                    <br>
+                    <p>Approx Hour<span id="hr_error" style="color: red;"></span></p>
+                                  <div class="bootstrap-timepicker">
+                    <input type="text" class="form-control timepicker" name="approx_hr" value="{{ route.approx_hr }}" placeholder="Enter approx driving hour">
+                                  </div>
+                    <br>
+                    <input type="submit" class="btn btn-primary" value="Save"/>
+                    <a href="{% url 'routes' %}" class="pull-right">Back to route list</a>
+              </form>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+    <script>
+    function validateForm() {
+    var check=true;
+    var depart = document.forms["RouteForm"]["depart"].value;
+    var arrive = document.forms["RouteForm"]["arrive"].value;
+    var approx_hr = document.forms["RouteForm"]["approx_hr"].value;
+
+    if (depart == arrive) {
+        alert("Depart and Arrive places are same. Please choose different one.");
+        check=false;
+    }
+
+    if (approx_hr == "") {
+        document.getElementById("hr_error").innerHTML = "* Enter approx driving hour";
+        check=false;
+    }
+    else {
+        document.getElementById("hr_error").innerHTML = "";
+    }
+
+    return check;
+}
+ $('.timepicker').timepicker({
+      showInputs: false,
+     showMeridian: false
+    })
+
+    </script>
+{% endblock %}

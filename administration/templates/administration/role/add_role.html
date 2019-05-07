@@ -1,0 +1,72 @@
+{% extends "admin_base.html" %}
+{% block title %}Roles{% endblock %}
+{% block content %}
+    <div class="content-wrapper">
+  <section class="content-header">
+    <h1>
+        Roles
+    </h1>
+  </section>
+
+  <section class="content">
+    <div class="row">
+                        <div class="col-md-1"></div>
+
+      <div class="col-md-10">
+        <div class="box box-primary">
+            <div class="box-body box-profile">
+            <h3 class="pull-left">
+                New Role
+            </h3>
+            <div class="row">
+              <div class="col-md-12">
+                 <form name="newrolefrom" method="post" enctype="multipart/form-data" onsubmit="return validateForm()" class="form">
+                    {% csrf_token %}
+                     <div class="form-group col-md-12">
+                         <label for="role_name">Role Name<span id="name_error" style="color: red;"></span> </label>
+                         <input type="text" name="role_name" class="form-control" placeholder="Enter Role Name" required/>
+                     </div>
+                    <div class="form-group col-md-12">
+                         <label for="eng_service_name" class="col-md-2">Active :<span id="name_error" style="color: red;"></span> </label>
+
+                        <div class="col-md-1">
+                                <input type="radio" name="active" value="True" checked />
+                                <label for="yes">Yes</label>
+                            </div>
+                            <div class="col-md-1">
+                                <input type="radio"  name="active" value="False" />
+                                <label for="no">No</label>
+                            </div>
+                     </div>
+                     <div class="form-group col-md-12">
+                         <a href="{% url 'role' %}"class="btn btn-default pull-left">Back</a>
+                <input type="submit" class="btn btn-success pull-right" value="Add Role"/>
+                     </div>
+            </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+</div>
+    <script>
+        $('#citytable').dataTable(
+        );
+    </script>
+     <script>
+    function validateForm() {
+    var check=true;
+    var role_name = document.forms["newrolefrom"]["role_name"].value;
+
+    if (role_name == "") {
+        alert("role name is required");
+        check=false;
+    }
+
+    return check;
+}
+    </script>
+{% endblock %}

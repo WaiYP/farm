@@ -1,0 +1,92 @@
+
+{% extends "admin_base.html" %}
+{% load static %}
+{% block title %}Add Seats{% endblock %}
+{% block content %}
+    <div class="content-wrapper">
+  <section class="content-header">
+    <h1>
+        Seats
+    </h1>
+  </section>
+
+  <section class="content">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="box box-primary">
+            <div class="box-body box-profile">
+            <h3 class="pull-left">
+                Seats
+            </h3>
+            <div class="row">
+
+              <div class="col-md-12">
+               {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-success alert-dismissible">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            {{ message }}
+                          </div>
+                    {% endfor %}
+                {% endif %}
+              </div>
+            <div class="col-md-6">
+                <form name="newcityform" method="post" enctype="multipart/form-data" onsubmit="return validateForm()" class="form">
+                    {% csrf_token %}
+                     <div class="form-group col-md-12">
+                         <label for="c_name">Seat Name<span id="name_error" style="color: red;"></span> </label>
+                         <input type="text" name="seat_name" class="form-control" placeholder="Enter Seat name" required/>
+                     </div>
+                    <div class="form-group col-md-12">
+                         <label for="s_type">Seat Type<span id="name_error" style="color: red;"></span> </label>
+                        <select name="seat_type"   class="form-control"  >
+                            <option value="VIP">VIP</option>
+                            <option value="Normal" selected>Normal</option>
+                        </select>
+                     </div>
+                    <div class="form-group col-md-12">
+                         <label for="s_type">Row No<span id="name_error" style="color: red;"></span> </label>
+                         <input type="text" name="row_no" class="form-control" placeholder="Enter Row Number" required/>
+                    </div>
+                    <div class="form-group col-md-12">
+                         <label for="s_type">Seat No<span id="name_error" style="color: red;"></span> </label>
+                         <input type="text" name="seat_no" class="form-control" placeholder="Enter Seat Number" required/>
+                     </div>
+                    <div class="form-group col-md-12">
+                         <label for="s_type">Price (MMK)<span id="name_error" style="color: red;"></span> </label>
+                         <input type="text" name="price_mmk" class="form-control" placeholder="Enter Price in MMK" required/>
+                     </div>
+                    <div class="form-group col-md-12">
+                         <label for="s_type">Price (USD)<span id="name_error" style="color: red;"></span> </label>
+                         <input type="text" name="price_usd" class="form-control" placeholder="Enter Price in USD" required/>
+                     </div>
+
+
+
+                     <div class="form-group col-md-12">
+                         <a href="{% url 'bus_list' %}"class="btn btn-default pull-left">Back</a>
+                         <input type="submit" class="btn btn-success pull-right" value="Add Seat"/>
+                     </div>
+                </form>
+            </div>
+               <div class="col-md-6">
+                   {% for seat1 in seats %}
+
+                    {% ifchanged seat1.row_no %}
+                        <hr>
+                        <label>{{ seat1.seat_name }}</label>
+                    {% else %}
+                        <label>{{ seat1.seat_name }}</label>
+                     {% endifchanged %}
+               {% endfor %}
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+</div>
+
+{% endblock %}

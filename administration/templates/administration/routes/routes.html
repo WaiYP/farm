@@ -1,0 +1,66 @@
+{% extends "admin_base.html" %}
+{% block title %}Routes{% endblock %}
+{% block content %}
+    <div class="content-wrapper">
+
+  <section class="content">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="box box-primary">
+            <div class="box-body box-profile">
+            <h3 class="pull-left">
+                Route List
+            </h3>
+            <h3 class="pull-right">
+                <a href="{% url 'add_route' %}" class="btn btn-success">New Route</a>
+            </h3>
+            <div class="row">
+
+              <div class="col-md-12">
+              {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-success alert-dismissible">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            {{ message }}
+                          </div>
+                    {% endfor %}
+                {% endif %}
+                <table class="table table-bordered table-striped table-responsive table-hover" id="routetable">
+                <thead>
+                <tr>
+                <td>No</td>
+                <td><strong>Depart</strong></td>
+                <td><strong>Arrive</strong></td>
+                <td><strong>Approx Hr</strong></td>
+                <td></td>
+            </tr>
+                </thead>
+            <tbody>
+             {% for route in routes %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ route.depart | title}}</td>
+                <td>{{ route.arrive | title}}</td>
+                <td>{{ route.approx_hr }}</td>
+                <td>
+                    <a href="{% url 'stop_points' route.pk %}" class="btn btn-primary btn-xs">Add stop point</a>
+                    <a href="{% url 'edit_route' route.pk %}" class="btn btn-success btn-xs">Edit</a>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+
+        </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+    <script>
+        $('#routetable').dataTable(
+        );
+    </script>
+{% endblock %}

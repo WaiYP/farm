@@ -1,0 +1,59 @@
+{% extends "admin_base.html" %}
+{% block title %}Ferry Locations{% endblock %}
+{% block content %}
+    <div class="content-wrapper">
+  <section class="content-header">
+    <h1>
+        Ferry Locations
+    </h1>
+  </section>
+
+  <section class="content">
+    <div class="row">
+                        <div class="col-md-1"></div>
+
+      <div class="col-md-10">
+        <div class="box box-primary">
+            <div class="box-body box-profile">
+            <h3 class="pull-left">
+                New Ferry Location
+            </h3>
+            <div class="row">
+              <div class="col-md-12">
+                 <form name="newlocatinoform" method="post" enctype="multipart/form-data" onsubmit="return validateForm()" class="form">
+                    {% csrf_token %}
+                     <div class="form-group col-md-12">
+                         <label for="location_name">Location Name<span id="name_error" style="color: red;"></span> </label>
+                         <input type="text" name="location_name" class="form-control" placeholder="Enter city name" required/>
+                     </div>
+                     <div class="form-group col-md-12">
+                         <a href="{% url 'ferry_service' %}"class="btn btn-default pull-left">Back</a>
+                <input type="submit" class="btn btn-success pull-right" value="Add Location"/>
+                     </div>
+            </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+</div>
+    <script>
+        $('#citytable').dataTable(
+        );
+    </script>
+     <script>
+    function validateForm() {
+    var check=true;
+    var c_name = document.forms["newlocationform"]["location_name"].value;
+
+    if (location_name == "") {
+        alert("Location name is required");
+        check=false;
+    }
+    return check;
+}
+    </script>
+{% endblock %}

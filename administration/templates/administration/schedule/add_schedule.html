@@ -1,0 +1,154 @@
+{% extends "admin_base.html" %}
+{% block title %}Add New Schedule{% endblock %}
+{% block content %}
+    <div class="content-wrapper">
+  <section class="content">
+    <div class="row">
+      <div class="col-md-1"></div>
+      <div class="col-md-10">
+        <div class="box box-primary">
+          <div class="box-body box-profile">
+            <h3 class="pull-left">{{ page_title }}</h3>
+            <div class="row">
+              <div class="col-md-1"></div>
+              <div class="col-md-10">
+
+              <h3>Add new schedule</h3>
+              <hr>
+                  {% if messages %}
+                    {% for message in messages %}
+                  <p style="color:green">{{ message }}</p>
+                    {% endfor %}
+                {% endif %}
+              <form name="ScheduleForm" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+                {% csrf_token %}
+                    <p>Bus <span id="bus_error" style="color: red;"></span></p>
+                    <select name="bus" class="form-control" required>
+                      <option value="">- Select your vehicle -</option>
+                      {% for bus in sch_bus %}
+                          <option value="{{ bus.pk }}">{{ bus.plate_num }} ({{ bus.type }})</option>
+                      {% endfor %}
+                    </select>
+                    <br>
+                    <p>Route <span id="route_error" style="color: red;"></span></p>
+                    <select name="route" class="form-control" required>
+                      <option value="">- Select route -</option>
+                      {% for route in sch_route %}
+                          <option value="{{ route.pk }}">{{ route.depart }} - {{ route.arrive }} (Approx Hr: {{ route.approx_hr }})</option>
+                      {% endfor %}
+                    </select>
+                    <br>
+
+                    <p>Depart Date <span id="date_error" style="color: red;"></span></p>
+                    Year: <input type="text" class="form-control" name="d_year" value="2018" required>
+                    Month:
+                    <select id="mySelect" class="form-control" name="d_month" onchange="myFunction()" required>
+        <option value="">- select month -</option>
+        <option value="01">Jan</option>
+        <option value="02">Feb</option>
+        <option value="03">Mar</option>
+        <option value="04">Apr</option>
+        <option value="05">May</option>
+        <option value="06">June</option>
+        <option value="07">July</option>
+        <option value="08">Aug</option>
+        <option value="09">Sept</option>
+        <option value="10">Octo</option>
+        <option value="11">Nov</option>
+        <option value="12">Dec</option>
+    </select>
+                  <br>
+                  <strong></strong>
+
+
+                  <br>
+                    <p>Depart Time <span id="time_error" style="color: red;"></span></p>
+                    <div class="bootstrap-timepicker">
+                       <input type="text" class="form-control timepicker" name="depart_time" value="" placeholder="Enter depart time">
+                    <br>
+                    </div>
+                    <input type="submit" class="btn btn-primary" value="Add Schedule"/>
+                    <a href="{% url 'schedule_list' %}" class="pull-right">Back to schedule list</a>
+              </form>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+    function myFunction() {
+        $("strong").html("");
+        var t_month = document.getElementById("mySelect").value;
+        var t_year = document.forms["ScheduleForm"]["d_year"].value;
+
+        if(t_month == ''){
+            alert('Select month');
+        }
+        else{
+            var i;
+            var d = new Date(t_year,t_month,0);
+            var n = d.getDate();
+            for (i = 1; i <= n; i++) {
+                $("strong").append("<input type='checkbox' name='checks[]' value='"+i+"'>"+ i + "  ");
+            }
+        }
+    }
+
+  function validateForm() {
+    var check=true;
+    var bus = document.forms["ScheduleForm"]["bus"].value;
+    var route = document.forms["ScheduleForm"]["route"].value;
+    var depart_date = document.forms["ScheduleForm"]["depart_date"].value;
+    var depart_time = document.forms["ScheduleForm"]["depart_time"].value;
+    if (bus == "") {
+        document.getElementById("bus_error").innerHTML = "* Please select your vehicle";
+        check=false;
+    }
+    else {
+        document.getElementById("bus_error").innerHTML = "";
+    }
+
+    if (route == "") {
+        document.getElementById("route_error").innerHTML = "* Please select your route";
+        check=false;
+    }
+    else {
+        document.getElementById("route_error").innerHTML = "";
+    }
+
+    if (depart_date == "") {
+        document.getElementById("date_error").innerHTML = "* Please select depart date";
+        check=false;
+    }
+    else {
+        document.getElementById("date_error").innerHTML = "";
+    }
+
+    if (depart_time == "") {
+        document.getElementById("time_error").innerHTML = "* Please select depart time";
+        check=false;
+    }
+    else {
+        document.getElementById("time_error").innerHTML = "";
+    }
+
+    return check;
+}
+
+ $('.timepicker').timepicker({
+      showInputs: false,
+     showMeridian: false
+    })
+
+     $('#datepicker').datepicker({
+         format: 'yyyy-mm-dd',
+         autoclose: true
+
+    })
+</script>
+{% endblock %}
