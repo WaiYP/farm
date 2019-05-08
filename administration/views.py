@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404, render, redirect, HttpResponse
 from django.contrib import messages
-from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth import update_session_auth_hash, authenticate, login
 from django.contrib.auth.forms import PasswordChangeForm, UserChangeForm
 from administration.forms import register_form, edit_profile_form, bus_reg_form, \
     bus_edit_form, schedule_edit_form
@@ -9,6 +9,26 @@ from .models import *
 import os
 from django.db import connection
 
+def index(request):
+    # if not request.user.is_authenticated():
+    return render(request, 'administration/login.html')
+    # else:
+    #     return render(request, 'dashboard/index.html', {})
+
+def user_login(request):
+    if request.method == "POST":
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            if user.is_active:
+                login(request, user)
+                return render(request, 'dashboard/index.html', {})
+            else:
+                return render(request, 'administration/login.html', {'error_message': 'Your account has been disabled'})
+        else:
+            return render(request, 'administration/login.html', {'error_message': 'Invalid login'})
+    return render(request, 'administration/login.html')
 
 def home(request):
     if request.user.is_authenticated:
